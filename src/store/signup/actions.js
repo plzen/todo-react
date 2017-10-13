@@ -1,13 +1,28 @@
 import * as types from './actionTypes'
+import { SubmissionError } from 'redux-form'
 
-export const signup = () => {
-  return dispatch => {
+import { validateForm } from './validator'
+
+import { isEmpty } from '../../utils'
+
+export const signup = values => {
+
+  return dispatch => new Promise((resolve, reject) => {
     dispatch(signupLoading())
 
-    setTimeout(() => {
-      dispatch(signupSuccess())
-    }, 1000)
-  }
+    setTimeout(function(){
+
+      const errors = validateForm(values)
+      if (!isEmpty(errors)) {
+        const submissionError = new SubmissionError(errors)
+        reject(submissionError)
+        dispatch(signupError())
+      } else {
+        resolve()
+        dispatch(signupSuccess())
+      }
+    }, 1150);
+  })
 }
 
 const signupLoading  = () => ({
