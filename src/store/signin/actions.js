@@ -1,6 +1,4 @@
 import * as types from './actionTypes'
-import { signinSuccess } from '../signin'
-
 import firebaseService from '../../services/firebase'
 
 import { SubmissionError } from 'redux-form'
@@ -8,46 +6,45 @@ import { SubmissionError } from 'redux-form'
 import { validateForm } from './validator'
 
 import { isEmpty } from '../../utils'
-import { parseSignupErrors } from '../../utils/firebase'
+import { parseSigninErrors } from '../../utils/firebase'
 
-export const signup = values => {
+export const signin = values => {
   return dispatch => new Promise((resolve, reject) => {
-    dispatch(signupLoading())
+    dispatch(signinLoading())
 
     // Validate form locally
     const errors = validateForm(values)
     if (!isEmpty(errors)) {
       const submissionError = new SubmissionError(errors)
       reject(submissionError)
-      dispatch(signupError(submissionError))
+      dispatch(signinError(submissionError))
     } else {
       firebaseService.auth()
-        .createUserWithEmailAndPassword(values.email, values.password)
+        .signInWithEmailAndPassword(values.email, values.password)
         .then(user => {
           resolve(user)
-          dispatch(signupSuccess(user))
           dispatch(signinSuccess(user))
         })
         .catch(error => {
-          const parsedError = parseSignupErrors(error)
+          const parsedError = parseSigninErrors(error)
           const submissionError = new SubmissionError(parsedError)
           reject(submissionError)
-          dispatch(signupError(submissionError))
+          dispatch(signinError(submissionError))
         })
     }
   })
 }
 
-const signupLoading = () => ({
-  type: types.SIGNUP_LOADING
+const signinLoading = () => ({
+  type: types.SIGNIN_LOADING
 })
 
-const signupSuccess = user => ({
-  type: types.SIGNUP_SUCCESS,
+export const signinSuccess = user => ({
+  type: types.SIGNIN_SUCCESS,
   user: user
 })
 
-const signupError = error => ({
-  type: types.SIGNUP_ERROR,
+const signinError = error => ({
+  type: types.SIGNIN_ERROR,
   error: error
 })

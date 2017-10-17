@@ -2,15 +2,14 @@ export const parseSignupErrors = error => {
   switch (error.code) {
     case 'auth/email-already-in-use':
     case 'auth/invalid-email':
-      // return { email: error.message }
-      return { _error: error.message }
-      break
+      return { email: error.message }
     case 'auth/weak-password':
-      // return { password: error.message }
+      return { password: error.message }
+    default:
       return { _error: error.message }
-      break
-    case 'auth/operation-not-allowed':
-      return { _error: error.message }
-      break
   }
+}
+
+export const parseSigninErrors = error => {
+  return { _error: error.message }
 }

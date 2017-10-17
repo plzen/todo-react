@@ -8,7 +8,7 @@ import './style.css'
 
 const SignUpFormComponent = props => {
 
-  const { error, handleSubmit, pristine, reset, submitting, signup, loading } = props
+  const { error, handleSubmit, signup, loading } = props
 
   return (
     <Form onSubmit={handleSubmit(signup)}>

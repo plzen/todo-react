@@ -19,5 +19,5 @@ export const email = value => {
 }
 
 export const equals = (value1, value2) => {
-  return value1 == value2
+  return value1 === value2
 }
