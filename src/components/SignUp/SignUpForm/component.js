@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form } from 'semantic-ui-react'
+import { Form, Message } from 'semantic-ui-react'
 import { Field } from 'redux-form'
 
 import { InputField } from '../../Form/InputField'
@@ -12,6 +12,8 @@ const SignUpFormComponent = props => {
 
   return (
     <Form onSubmit={handleSubmit(signup)}>
+
+      {error && <Message negative>{error}</Message>}
 
       <Field
         name='email'
