@@ -39,7 +39,7 @@ const signinLoading = () => ({
   type: types.SIGNIN_LOADING
 })
 
-export const signinSuccess = user => ({
+const signinSuccess = user => ({
   type: types.SIGNIN_SUCCESS,
   user: user
 })

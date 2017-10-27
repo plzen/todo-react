@@ -1,5 +1,4 @@
 import * as types from './actionTypes'
-import { signinSuccess } from '../signin'
 
 import firebaseService from '../../services/firebase'
 
@@ -25,8 +24,7 @@ export const signup = values => {
         .createUserWithEmailAndPassword(values.email, values.password)
         .then(user => {
           resolve(user)
-          dispatch(signupSuccess(user))
-          dispatch(signinSuccess(user))
+          dispatch(signupSuccess())
         })
         .catch(error => {
           const parsedError = parseSignupErrors(error)
@@ -42,9 +40,8 @@ const signupLoading = () => ({
   type: types.SIGNUP_LOADING
 })
 
-const signupSuccess = user => ({
-  type: types.SIGNUP_SUCCESS,
-  user: user
+const signupSuccess = () => ({
+  type: types.SIGNUP_SUCCESS
 })
 
 const signupError = error => ({

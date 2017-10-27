@@ -1,20 +1,39 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import TodoApp from './component'
 
-import * as signin from '../../store/signin'
+import * as user from '../../store/user'
 
 class TodoAppContainer extends Component {
+
+  componentDidMount() {
+    this.props.monitorSession()
+  }
+
   render() {
     return (
-      <TodoApp {...this.props} />
+      <TodoApp
+       restoring={this.props.restoring}
+       loggedIn={this.props.loggedIn} />
     )
   }
 }
 
 const mapStateToProps = state => ({
-  loggedIn: signin.isLoggedIn(state)
+  restoring: user.isRestoring(state),
+  loggedIn: user.isLoggedIn(state)
 })
 
-export default connect(mapStateToProps)(TodoAppContainer)
+const mapDispatchToProps = {
+  monitorSession: user.monitorSession
+}
+
+TodoAppContainer.propTypes = {
+  restoring: PropTypes.bool.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  monitorSession: PropTypes.func.isRequired
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoAppContainer)
