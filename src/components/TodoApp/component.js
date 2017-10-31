@@ -1,6 +1,10 @@
 import React from 'react'
 import { Container, Loader } from 'semantic-ui-react'
+import { Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
+
+import PrivateRoute from '../Route/PrivateRoute'
+import GuestRoute from '../Route/GuestRoute'
 
 import Header from '../Header'
 import SignUp from '../SignUp'
@@ -17,7 +21,10 @@ const TodoAppComponent = props =>
       :
       <div className="app-container">
         <Header />
-        {props.loggedIn ? <Dashboard /> : <SignUp />}
+        <Switch>
+          <GuestRoute exact path="/signup" component={SignUp} />
+          <PrivateRoute path="/" component={Dashboard} />
+        </Switch>
       </div>
     }
   </div>
