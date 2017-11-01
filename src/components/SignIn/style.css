@@ -1,0 +1,7 @@
+.signin-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px;
+  width: 300px;
+}

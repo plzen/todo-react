@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom'
 
 import { InputField } from '../../Form/InputField'
 
-const SignUpFormComponent = props => {
+const SignInFormComponent = props => {
 
-  const { error, handleSubmit, signup, loading } = props
+  const { error, handleSubmit, signin, loading } = props
 
   return (
-    <Form onSubmit={handleSubmit(signup)}>
+    <Form onSubmit={handleSubmit(signin)}>
 
       {error && <Message negative>{error}</Message>}
 
@@ -27,24 +27,17 @@ const SignUpFormComponent = props => {
         type='password'
         disabled={loading} />
 
-      <Field
-        name='confirm_password'
-        component={InputField}
-        placeholder='Confirm Password'
-        type='password'
-        disabled={loading} />
-
       <Form.Button
         color='blue'
         disabled={loading}
         loading={loading}>
-        Sign Up
+        Sign In
       </Form.Button>
 
-      <Container>Already a member? <Link to="/signin">Sign In</Link></Container>
+      <Container>Don&apos;t have an account? <Link to="/signup">Sign Up</Link></Container>
 
     </Form>
   )
 }
 
-export default SignUpFormComponent
+export default SignInFormComponent

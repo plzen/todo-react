@@ -15,15 +15,13 @@ class TodoAppContainer extends Component {
   render() {
     return (
       <TodoApp
-       restoring={this.props.restoring}
-       loggedIn={this.props.loggedIn} />
+       restoring={this.props.restoring} />
     )
   }
 }
 
 const mapStateToProps = state => ({
-  restoring: user.isRestoring(state),
-  loggedIn: user.isLoggedIn(state)
+  restoring: user.isRestoring(state)
 })
 
 const mapDispatchToProps = {
@@ -32,7 +30,6 @@ const mapDispatchToProps = {
 
 TodoAppContainer.propTypes = {
   restoring: PropTypes.bool.isRequired,
-  loggedIn: PropTypes.bool.isRequired,
   monitorSession: PropTypes.func.isRequired
 }
 

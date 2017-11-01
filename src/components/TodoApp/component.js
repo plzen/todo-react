@@ -8,6 +8,7 @@ import GuestRoute from '../Route/GuestRoute'
 
 import Header from '../Header'
 import SignUp from '../SignUp'
+import SignIn from '../SignIn'
 import Dashboard from '../Dashboard'
 
 import './style.css'
@@ -23,6 +24,7 @@ const TodoAppComponent = props =>
         <Header />
         <Switch>
           <GuestRoute exact path="/signup" component={SignUp} />
+          <GuestRoute exact path="/signin" component={SignIn} />
           <PrivateRoute path="/" component={Dashboard} />
         </Switch>
       </div>
@@ -30,8 +32,7 @@ const TodoAppComponent = props =>
   </div>
 
 TodoAppComponent.propTypes = {
-  restoring: PropTypes.bool.isRequired,
-  loggedIn: PropTypes.bool.isRequired
+  restoring: PropTypes.bool.isRequired
 }
 
 export default TodoAppComponent

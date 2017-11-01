@@ -1,22 +1,20 @@
 import * as types from './actionTypes'
-import firebaseService from '../../services/firebase'
 
 const initialState = {
-  loading: false,
-  user: firebaseService.auth().currentUser
+  loading: false
 }
 
-const session = (state = initialState, action) => {
+const signin = (state = initialState, action) => {
   switch(action.type) {
     case types.SIGNIN_LOADING:
-      return { ...state, loading: true }
+      return { loading: true }
     case types.SIGNIN_SUCCESS:
-      return { loading: false, user: action.user }
+      return { loading: false }
     case types.SIGNIN_ERROR:
-      return { ...state, loading: false }
+      return { loading: false }
     default:
       return state
   }
 }
 
-export default session
+export default signin

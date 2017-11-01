@@ -4,7 +4,7 @@ const initialState = {
   loading: false
 }
 
-const session = (state = initialState, action) => {
+const signup = (state = initialState, action) => {
   switch(action.type) {
     case types.SIGNUP_LOADING:
       return { loading: true }
@@ -17,4 +17,4 @@ const session = (state = initialState, action) => {
   }
 }
 
-export default session
+export default signup
