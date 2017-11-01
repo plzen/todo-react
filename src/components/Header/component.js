@@ -1,11 +1,24 @@
 import React from 'react'
-import { Header } from 'semantic-ui-react'
+import { Container, Icon } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 
 import './style.css'
 
-const AppHeader = () =>
-  <div className="header-container">
-    <Header as='h1'>ToDo List</Header>
+const AppHeaderComponent = props =>
+  <div className="header-wrapper">
+    <Container>
+      <div className="header-container">
+        <span/>
+        <span className="header-title">ToDo List</span>
+        {props.loggedIn ? <Icon link name="sign out" size="big" loading={props.loading} onClick={props.signout}/> : <span/>}
+      </div>
+    </Container>
   </div>
 
-export default AppHeader
+AppHeaderComponent.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  signout: PropTypes.func.isRequired
+}
+
+export default AppHeaderComponent
