@@ -6,6 +6,7 @@ import signin from './signin'
 import signout from './signout'
 import user from './user'
 import projectsCreate from './projects/create'
+import projectsList from './projects/list'
 
 export default combineReducers({
   signup,
@@ -13,5 +14,6 @@ export default combineReducers({
   signout,
   user,
   projectsCreate,
+  projectsList,
   form
 })
