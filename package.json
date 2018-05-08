@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "firebase": "^4.5.2",
+    "firebase": "^4.13.0",
+    "prop-types": "^15.6.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
@@ -13,8 +14,8 @@
     "redux-form": "^7.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "semantic-ui-css": "^2.2.12",
-    "semantic-ui-react": "^0.73.1"
+    "semantic-ui-css": "^2.3.1",
+    "semantic-ui-react": "^0.79.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -23,7 +24,10 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "eslint": "^4.10.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.4.0"
   }
 }

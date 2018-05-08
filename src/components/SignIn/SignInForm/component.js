@@ -1,43 +1,42 @@
-import React from 'react'
-import { Container, Form, Message } from 'semantic-ui-react'
-import { Field } from 'redux-form'
-import { Link } from 'react-router-dom'
+import React from "react";
+import PropTypes from "prop-types";
+import { Container, Form, Message } from "semantic-ui-react";
+import { Field } from "redux-form";
+import { Link } from "react-router-dom";
 
-import { InputField } from '../../Form/InputField'
+import { InputField } from "../../Form/InputField";
 
-const SignInFormComponent = props => {
+const SignInFormComponent = ({
+  error, handleSubmit, signin, loading,
+}) => (
+  <Form onSubmit={handleSubmit(signin)}>
+    {error && <Message negative>{error}</Message>}
 
-  const { error, handleSubmit, signin, loading } = props
+    <Field name="email" component={InputField} placeholder="Email" disabled={loading} />
 
-  return (
-    <Form onSubmit={handleSubmit(signin)}>
+    <Field
+      name="password"
+      component={InputField}
+      placeholder="Password"
+      type="password"
+      disabled={loading}
+    />
 
-      {error && <Message negative>{error}</Message>}
-
-      <Field
-        name='email'
-        component={InputField}
-        placeholder='Email'
-        disabled={loading} />
-
-      <Field
-        name='password'
-        component={InputField}
-        placeholder='Password'
-        type='password'
-        disabled={loading} />
-
-      <Form.Button
-        color='blue'
-        disabled={loading}
-        loading={loading}>
+    <Form.Button color="blue" disabled={loading} loading={loading}>
         Sign In
-      </Form.Button>
+    </Form.Button>
 
-      <Container>Don&apos;t have an account? <Link to="/signup">Sign Up</Link></Container>
+    <Container>
+        Don&apos;t have an account? <Link to="/signup">Sign Up</Link>
+    </Container>
+  </Form>
+);
 
-    </Form>
-  )
-}
+SignInFormComponent.propTypes = {
+  error: PropTypes.string,
+  handleSubmit: PropTypes.func.isRequired,
+  signin: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+};
 
-export default SignInFormComponent
+export default SignInFormComponent;

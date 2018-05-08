@@ -1,0 +1,18 @@
+.dashboard-project-item {
+  margin-bottom: 10px;
+}
+
+.dashboard-project-item-visible {
+  background-color: #ffffff;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.dashboard-project-item-hidden {
+  padding: 0 !important;
+}
+
+.dashboard-project-item-hidden-container {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,22 +1,33 @@
-import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
+import { Route, Redirect } from "react-router-dom";
 
-const GuestRouteComponent = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    !rest.loggedIn ? (
-      <Component {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
+const InnerGuestRouteComponent = (props) => {
+  const { component: Component, loggedIn, location } = props;
+  return !loggedIn ? (
+    <Component {...props} />
+  ) : (
+    <Redirect
+      to={{
+        pathname: "/",
+        state: { from: location },
+      }}
+    />
+  );
+};
+
+InnerGuestRouteComponent.propTypes = {
+  component: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+};
+
+const GuestRouteComponent = ({ component, ...rest }) => (
+  <Route {...rest} render={() => <InnerGuestRouteComponent component={component} {...rest} />} />
+);
 
 GuestRouteComponent.propTypes = {
-  loggedIn: PropTypes.bool.isRequired
-}
+  component: PropTypes.func.isRequired,
+};
 
-export default GuestRouteComponent
+export default GuestRouteComponent;

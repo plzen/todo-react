@@ -1,1 +1,1 @@
-export const isLoading = state => state.signout.loading
+export const isLoading = state => state.signout.loading;

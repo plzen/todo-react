@@ -1,32 +1,32 @@
-import * as types from './actionTypes'
-import firebaseService from '../../services/firebase'
+import * as types from "./actionTypes";
+import firebaseService from "../../services/firebase";
 
-export const signout = () => {
-  return dispatch => new Promise((resolve, reject) => {
-    dispatch(signoutLoading())
+export const signout = () => dispatch =>
+  new Promise((resolve, reject) => {
+    dispatch(signoutLoading());
 
-    firebaseService.auth()
+    firebaseService
+      .auth()
       .signOut()
       .then(() => {
-        resolve()
-        dispatch(signoutSuccess())
+        resolve();
+        dispatch(signoutSuccess());
       })
-      .catch(error => {
-        reject(error)
-        dispatch(signoutError(error))
-      })
-  })
-}
+      .catch((error) => {
+        reject(error);
+        dispatch(signoutError(error));
+      });
+  });
 
 const signoutLoading = () => ({
-  type: types.SIGNOUT_LOADING
-})
+  type: types.SIGNOUT_LOADING,
+});
 
 const signoutSuccess = () => ({
   type: types.SIGNOUT_SUCCESS,
-})
+});
 
 const signoutError = error => ({
   type: types.SIGNOUT_ERROR,
-  error: error
-})
+  error,
+});

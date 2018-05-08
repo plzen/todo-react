@@ -1,20 +1,20 @@
-import * as types from './actionTypes'
+import * as types from "./actionTypes";
 
 const initialState = {
-  loading: false
-}
+  loading: false,
+};
 
 const signup = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case types.SIGNUP_LOADING:
-      return { loading: true }
+      return { loading: true };
     case types.SIGNUP_SUCCESS:
-      return { loading: false }
+      return { loading: false };
     case types.SIGNUP_ERROR:
-      return { loading: false }
+      return { loading: false };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default signup
+export default signup;

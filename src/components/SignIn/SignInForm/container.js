@@ -1,24 +1,23 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { reduxForm } from 'redux-form'
+import React from "react";
+import { connect } from "react-redux";
+import { reduxForm } from "redux-form";
 
-import SignInForm from './component'
+import SignInForm from "./component";
 
-import { signin } from '../../../store/signin'
+import { signin } from "../../../store/signin";
 
-const SignInFormContainer = props =>
-  <SignInForm {...props} />
+const SignInFormContainer = props => <SignInForm {...props} />;
 
 const mapStateToProps = state => ({
   loading: state.signin.loading,
-})
+});
 
 const mapDispatchToProps = {
-  signin: signin,
-}
+  signin,
+};
 
 const signinForm = reduxForm({
-  form: 'signinForm',
-})(SignInFormContainer)
+  form: "signinForm",
+})(SignInFormContainer);
 
-export default connect(mapStateToProps, mapDispatchToProps)(signinForm)
+export default connect(mapStateToProps, mapDispatchToProps)(signinForm);

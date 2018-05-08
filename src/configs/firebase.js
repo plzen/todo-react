@@ -4,5 +4,5 @@ export const firebaseConfig = {
   databaseURL: "https://react-todo-d5fad.firebaseio.com",
   projectId: "react-todo-d5fad",
   storageBucket: "react-todo-d5fad.appspot.com",
-  messagingSenderId: "109641649720"
-}
+  messagingSenderId: "109641649720",
+};

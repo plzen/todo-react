@@ -1,23 +1,19 @@
-import React from 'react'
-import { Accordion, Container, Icon } from 'semantic-ui-react'
-import PropTypes from 'prop-types'
+import React from "react";
+import { Container } from "semantic-ui-react";
+import PropTypes from "prop-types";
 
-import './style.css'
+import ProjectItem from "./ProjectItem";
 
-const ProjectListComponent = props =>
+const ProjectListComponent = ({ projects }) => (
   <Container>
-    {[...props.projects].map(project =>
-      <Accordion key={project.key} styled fluid className="dashboard-project-item">
-        <Accordion.Title>
-          <Icon name="dropdown" />
-          {project.name}
-        </Accordion.Title>
-      </Accordion>
-    )}
+    {[...projects].map(project => (
+      <ProjectItem key={project.key} project={project} />
+    ))}
   </Container>
+);
 
 ProjectListComponent.propTypes = {
-  projects: PropTypes.array.isRequired
-}
+  projects: PropTypes.array.isRequired,
+};
 
-export default ProjectListComponent
+export default ProjectListComponent;

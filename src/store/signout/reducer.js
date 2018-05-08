@@ -1,20 +1,20 @@
-import * as types from './actionTypes'
+import * as types from "./actionTypes";
 
 const initialState = {
-  loading: false
-}
+  loading: false,
+};
 
 const signout = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case types.SIGNOUT_LOADING:
-      return { loading: true }
+      return { loading: true };
     case types.SIGNOUT_SUCCESS:
-      return { loading: false }
+      return { loading: false };
     case types.SIGNOUT_ERROR:
-      return { loading: false }
+      return { loading: false };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default signout
+export default signout;

@@ -1,22 +1,33 @@
-import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const PrivateRouteComponent = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    rest.loggedIn ? (
-      <Component {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/signin',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
+const InnerPrivateRouteComponent = (props) => {
+  const { component: Component, loggedIn, location } = props;
+  return loggedIn ? (
+    <Component {...props} />
+  ) : (
+    <Redirect
+      to={{
+        pathname: "/signin",
+        state: { from: location },
+      }}
+    />
+  );
+};
+
+InnerPrivateRouteComponent.propTypes = {
+  component: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+};
+
+const PrivateRouteComponent = ({ component, ...rest }) => (
+  <Route {...rest} render={() => <InnerPrivateRouteComponent component={component} {...rest} />} />
+);
 
 PrivateRouteComponent.propTypes = {
-  loggedIn: PropTypes.bool.isRequired
-}
+  component: PropTypes.func.isRequired,
+};
 
-export default PrivateRouteComponent
+export default PrivateRouteComponent;

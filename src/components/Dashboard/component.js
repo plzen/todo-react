@@ -1,16 +1,19 @@
-import React from 'react'
-import { Container, Header } from 'semantic-ui-react'
+import React from "react";
+import { Container, Header } from "semantic-ui-react";
 
-import ProjectList from './ProjectList'
-import NewProjectForm from './NewProjectForm'
+import ProjectList from "./ProjectList";
+import NewProjectForm from "./NewProjectForm";
 
-import './style.css'
+import "./style.css";
 
-const Dashboard = () =>
+const Dashboard = () => (
   <Container>
-    <Header as="h2" className="dashboard-title">Projects</Header>
+    <Header as="h2" className="dashboard-title">
+      Projects
+    </Header>
     <ProjectList />
-    <NewProjectForm/>
+    <NewProjectForm />
   </Container>
+);
 
-export default Dashboard
+export default Dashboard;

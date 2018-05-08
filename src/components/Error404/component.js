@@ -1,11 +1,10 @@
-import React from 'react'
-import { Container } from 'semantic-ui-react'
+import React from "react";
+import { Container } from "semantic-ui-react";
 
-const Dashboard = () =>
+const Dashboard = () => (
   <Container>
-    <p>
-      404
-    </p>
+    <p>404</p>
   </Container>
+);
 
-export default Dashboard
+export default Dashboard;
