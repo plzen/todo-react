@@ -12,8 +12,8 @@ class ProjectListContainer extends Component {
   }
 
   render() {
-    const { projects } = this.props;
-    return <ProjectList projects={projects} />;
+    const { projects, loading } = this.props;
+    return <ProjectList projects={projects} loading={loading} />;
   }
 }
 

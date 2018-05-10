@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Container, Loader } from "semantic-ui-react";
 import { Switch } from "react-router-dom";
 
 import PrivateRoute from "../Route/PrivateRoute";
@@ -10,15 +9,14 @@ import Header from "../Header";
 import SignUp from "../SignUp";
 import SignIn from "../SignIn";
 import Dashboard from "../Dashboard";
+import { Loading } from "../common";
 
 import "./style.css";
 
 const TodoAppComponent = ({ restoring }) => (
   <div>
     {restoring ? (
-      <Container className="app-loader-container">
-        <Loader active />
-      </Container>
+      <Loading inline={false} />
     ) : (
       <div className="app-container">
         <Header />
