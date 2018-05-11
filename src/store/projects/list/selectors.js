@@ -1,4 +1,6 @@
-export const isLoading = state => state.projectsList.loading;
-export const getProjects = state => state.projectsList.projects;
-export const getError = state => state.projectsList.error;
-export const getActiveProject = state => state.projectsList.activeProject;
+import { path } from "ramda";
+
+export const isLoading = state => path(["projectsList", "loading"], state);
+export const getProjects = state => path(["projectsList", "projects"], state);
+export const getError = state => path(["projectsList", "error"], state);
+export const getActiveProject = state => path(["projectsList", "activeProject"], state);

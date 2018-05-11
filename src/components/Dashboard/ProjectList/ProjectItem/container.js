@@ -9,17 +9,14 @@ import * as projectList from "../../../../store/projects/list";
 const edit = (e) => {
   e.preventDefault();
   e.stopPropagation();
-};
 
-const remove = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+  console.log("edit");
 };
 
 const ProjectItemContainer = ({ project, activeProject, toggle }) => {
   const active = project.key === activeProject;
   return (
-    <ProjectItem project={project} active={active} edit={edit} remove={remove} toggle={toggle} />
+    <ProjectItem project={project} active={active} edit={edit} toggle={toggle} />
   );
 };
 
