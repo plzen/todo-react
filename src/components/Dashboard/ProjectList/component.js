@@ -3,20 +3,27 @@ import { Container } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 import ProjectItem from "./ProjectItem";
+import EditItem from "./EditItem";
 import { Loading } from "../../common";
 
-const ProjectListComponent = ({ projects, loading }) => {
+const ProjectListComponent = ({ projects, loading, activeProject }) => {
   if (loading) {
     return <Loading />;
   }
   return (
     <Container>
-      {[...projects].map(project => <ProjectItem key={project.key} project={project} />)}
+      {[...projects].map((project) => {
+        if (project.key === activeProject) {
+          return <EditItem key={project.key} project={project} />;
+        }
+        return <ProjectItem key={project.key} project={project} />;
+      })}
     </Container>
   );
 };
 
 ProjectListComponent.propTypes = {
+  activeProject: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
 };

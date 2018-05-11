@@ -2,15 +2,16 @@ import React from "react";
 import { Accordion, Grid, Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
+import ProjectEditButton from "./ProjectEditButton";
 import ProjectRemoveButton from "./ProjectRemoveButton";
 
 import "./style.css";
 
 const ProjectItemComponent = ({
-  active, edit, project, toggle,
+  active, project, toggle,
 }) => (
   <Accordion styled fluid className="dashboard-project-item">
-    <Accordion.Title active={active} index={project.id} onClick={() => toggle(project.key)}>
+    <Accordion.Title active={active} index={project.id} onClick={toggle}>
       <Grid columns={4}>
         <Grid.Column>
           <Icon name="dropdown" />
@@ -18,7 +19,7 @@ const ProjectItemComponent = ({
         </Grid.Column>
         {!active && (
           <Grid.Column floated="right" textAlign="right">
-            <Icon name="edit" size="large" onClick={edit} />
+            <ProjectEditButton project={project} />
             <ProjectRemoveButton project={project} />
           </Grid.Column>
         )}
@@ -33,7 +34,6 @@ ProjectItemComponent.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
   active: PropTypes.bool.isRequired,
-  edit: PropTypes.func.isRequired,
   toggle: PropTypes.func.isRequired,
 };
 

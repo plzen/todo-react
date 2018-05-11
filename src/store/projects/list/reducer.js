@@ -15,7 +15,7 @@ const projectList = (state = initialState, action) => {
       return { ...state, loading: false, projects: action.projects };
     case types.PROJECT_LIST_FAILURE:
       return { ...state, loading: false, error: action.error };
-    case types.PROJECT_TOGGLE:
+    case types.PROJECT_LIST_TOGGLE:
       return { ...state, activeProject: action.key };
     default:
       return state;

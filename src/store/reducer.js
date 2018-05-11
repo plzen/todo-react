@@ -8,6 +8,7 @@ import user from "./user";
 import projectsCreate from "./projects/create";
 import projectsList from "./projects/list";
 import projectsRemove from "./projects/remove";
+import projectsEdit from "./projects/edit";
 
 export default combineReducers({
   signup,
@@ -17,5 +18,6 @@ export default combineReducers({
   projectsCreate,
   projectsList,
   projectsRemove,
+  projectsEdit,
   form,
 });

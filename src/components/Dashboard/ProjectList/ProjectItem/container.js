@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -6,19 +6,29 @@ import ProjectItem from "./component";
 
 import * as projectList from "../../../../store/projects/list";
 
-const edit = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+class ProjectItemContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.handleToggle = this.handleToggle.bind(this);
+  }
 
-  console.log("edit");
-};
+  handleToggle() {
+    const { project, toggle } = this.props;
+    toggle(project.key);
+  }
 
-const ProjectItemContainer = ({ project, activeProject, toggle }) => {
-  const active = project.key === activeProject;
-  return (
-    <ProjectItem project={project} active={active} edit={edit} toggle={toggle} />
-  );
-};
+  render() {
+    const { project, activeProject } = this.props;
+    const active = project.key === activeProject;
+    return (
+      <ProjectItem
+        project={project}
+        active={active}
+        toggle={this.handleToggle}
+      />
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   activeProject: projectList.getActiveProject(state),
@@ -29,7 +39,9 @@ const mapDispatchToProps = {
 };
 
 ProjectItemContainer.propTypes = {
-  project: PropTypes.object.isRequired,
+  project: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+  }).isRequired,
   activeProject: PropTypes.string.isRequired,
   toggle: PropTypes.func.isRequired,
 };

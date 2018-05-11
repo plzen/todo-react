@@ -60,6 +60,6 @@ export const projectListFailure = error => ({
 });
 
 export const projectToggle = key => ({
-  type: types.PROJECT_TOGGLE,
+  type: types.PROJECT_LIST_TOGGLE,
   key,
 });
