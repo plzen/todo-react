@@ -8,7 +8,7 @@ import { validateForm } from "./validator";
 import { isEmpty } from "../../utils";
 import { parseSigninErrors } from "../../utils/firebase";
 
-export const signin = values => dispatch =>
+export const signinUser = values => dispatch =>
   new Promise((resolve, reject) => {
     dispatch(signinLoading());
 

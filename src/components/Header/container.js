@@ -7,8 +7,8 @@ import AppHeaderComponent from "./component";
 import * as signout from "../../store/signout";
 import * as user from "../../store/user";
 
-const AppHeaderContainer = props => (
-  <AppHeaderComponent loading={props.loading} loggedIn={props.loggedIn} signout={props.signout} />
+const AppHeaderContainer = ({ loading, loggedIn, signoutUser }) => (
+  <AppHeaderComponent loading={loading} loggedIn={loggedIn} signout={signoutUser} />
 );
 
 const mapStateToProps = state => ({
@@ -17,13 +17,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  signout: signout.signout,
+  signoutUser: signout.signoutUser,
 };
 
 AppHeaderContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   loggedIn: PropTypes.bool.isRequired,
-  signout: PropTypes.func.isRequired,
+  signoutUser: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppHeaderContainer);

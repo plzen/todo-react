@@ -4,7 +4,7 @@ import { reduxForm } from "redux-form";
 
 import SignUpForm from "./component";
 
-import { signup } from "../../../store/signup";
+import { signupUser } from "../../../store/signup";
 
 const SignUpFormContainer = props => <SignUpForm {...props} />;
 
@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  signup,
+  signupUser,
 };
 
 const signupForm = reduxForm({

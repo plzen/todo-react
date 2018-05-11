@@ -9,7 +9,7 @@ import { validateForm } from "./validator";
 import { isEmpty } from "../../utils";
 import { parseSignupErrors } from "../../utils/firebase";
 
-export const signup = values => dispatch =>
+export const signupUser = values => dispatch =>
   new Promise((resolve, reject) => {
     dispatch(signupLoading());
 

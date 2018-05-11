@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 import { InputField } from "../../Form/InputField";
 
 const SignUpFormComponent = ({
-  error, handleSubmit, signup, loading,
+  error, handleSubmit, signupUser, loading,
 }) => (
-  <Form onSubmit={handleSubmit(signup)}>
+  <Form onSubmit={handleSubmit(signupUser)}>
     {error && <Message negative>{error}</Message>}
 
     <Field name="email" component={InputField} placeholder="Email" disabled={loading} />
@@ -43,7 +43,7 @@ const SignUpFormComponent = ({
 SignUpFormComponent.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  signup: PropTypes.func.isRequired,
+  signupUser: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
 

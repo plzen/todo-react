@@ -1,7 +1,7 @@
 import * as types from "./actionTypes";
 import firebaseService from "../../services/firebase";
 
-export const signout = () => dispatch =>
+export const signoutUser = () => dispatch =>
   new Promise((resolve, reject) => {
     dispatch(signoutLoading());
 
