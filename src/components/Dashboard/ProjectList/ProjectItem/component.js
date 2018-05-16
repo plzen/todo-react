@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 
 import ProjectEditButton from "./ProjectEditButton";
 import ProjectRemoveButton from "./ProjectRemoveButton";
+import TaskList from "../../TaskList";
+import NewTaskForm from "../../NewTaskForm";
 
 import "./style.css";
 
-const ProjectItemComponent = ({
-  active, project, toggle,
-}) => (
+const ProjectItemComponent = ({ active, project, toggle }) => (
   <Accordion styled fluid className="dashboard-project-item">
     <Accordion.Title active={active} index={project.id} onClick={toggle}>
       <Grid columns={4}>
@@ -25,7 +25,10 @@ const ProjectItemComponent = ({
         )}
       </Grid>
     </Accordion.Title>
-    <Accordion.Content active={active}>Content</Accordion.Content>
+    <Accordion.Content active={active}>
+      <TaskList project={project} />
+      <NewTaskForm project={project} />
+    </Accordion.Content>
   </Accordion>
 );
 
