@@ -19,7 +19,7 @@ class ProjectItemContainer extends Component {
     } = this.props;
     toggle(project.key);
 
-    if (activeProject === "") {
+    if (activeProject === "" || activeProject !== project.key) {
       loadTasks(project.key);
     }
   }

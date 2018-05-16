@@ -1,0 +1,7 @@
+.dashboard-task-item {
+  padding: 10px 20px;
+}
+
+.dashboard-task-item:last-child {
+  padding-bottom: 25px;
+}

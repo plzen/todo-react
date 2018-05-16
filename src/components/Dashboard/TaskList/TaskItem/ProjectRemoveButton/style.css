@@ -1,0 +1,7 @@
+.dimmer.visible.transition {
+  display: flex !important;
+}
+
+.dialog-container {
+  margin: 10px;
+}
