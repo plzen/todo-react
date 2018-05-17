@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ProjectItem from "./component";
 
-import * as projectList from "../../../../store/projects/list";
+import { projectsActions, projectsSelectors } from "../../../../store/projects";
 import * as taskList from "../../../../store/tasks/list";
 
 class ProjectItemContainer extends Component {
@@ -32,11 +32,11 @@ class ProjectItemContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  activeProject: projectList.getActiveProject(state),
+  activeProject: projectsSelectors.getActiveProject(state),
 });
 
 const mapDispatchToProps = {
-  toggle: projectList.toggleProject,
+  toggle: projectsActions.toggleProject,
   loadTasks: taskList.loadTasks,
 };
 

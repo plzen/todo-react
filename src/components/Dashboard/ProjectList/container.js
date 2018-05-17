@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ProjectList from "./component";
 
-import * as projectList from "../../../store/projects/list";
+import { projectsActions, projectsSelectors } from "../../../store/projects";
 import * as projectEdit from "../../../store/projects/edit";
 
 class ProjectListContainer extends Component {
@@ -19,13 +19,13 @@ class ProjectListContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: projectList.isLoading(state),
-  projects: projectList.getProjects(state),
+  loading: projectsSelectors.isLoading(state),
+  projects: projectsSelectors.getEntities(state),
   activeProject: projectEdit.getActiveProject(state),
 });
 
 const mapDispatchToProps = {
-  loadProjects: projectList.loadProjects,
+  loadProjects: projectsActions.loadProjects,
 };
 
 ProjectListContainer.propTypes = {
