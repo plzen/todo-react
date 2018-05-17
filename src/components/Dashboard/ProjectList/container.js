@@ -19,7 +19,7 @@ class ProjectListContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: projectsSelectors.isLoading(state),
+  loading: projectsSelectors.isListLoading(state),
   projects: projectsSelectors.getEntities(state),
   activeProject: projectEdit.getActiveProject(state),
 });

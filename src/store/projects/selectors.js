@@ -1,18 +1,19 @@
 import { path } from "ramda";
 
 import { createEntitySelectors } from "../shared/entity";
+import { createStatusSelectors } from "../shared/status";
 
-const isLoading = state => path(["projects", "loading"], state);
-const getError = state => path(["projects", "error"], state);
 const getActiveProject = state => path(["projects", "activeProject"], state);
 
-const baseSelectors = createEntitySelectors("projects");
+const entitySelectors = createEntitySelectors("projects");
+const listSelectors = createStatusSelectors("projects", "list");
+
+const isListLoading = state => listSelectors.isLoading(state);
 
 const projectsSelectors = {
-  ...baseSelectors,
-  isLoading,
-  getError,
+  ...entitySelectors,
+  isListLoading,
   getActiveProject,
 };
 
-export { projectsSelectors as default };
+export default projectsSelectors;

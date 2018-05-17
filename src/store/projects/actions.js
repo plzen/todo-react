@@ -1,14 +1,16 @@
-import { createEntityActionCreators } from "../shared/entity";
 import makeActionCreator from "../shared/makeActionCreator";
+import { createEntityActionCreators } from "../shared/entity";
+import { createStatusActionCreators } from "../shared/status";
 
 import actionTypes from "./actionTypes";
 import firebaseService from "../../services/firebase";
 
-const baseActions = createEntityActionCreators("PROJECTS");
+const entityActions = createEntityActionCreators("PROJECTS");
+const statusActions = createStatusActionCreators("PROJECTS");
 
 const loadProjects = () => dispatch =>
   new Promise((resolve, reject) => {
-    dispatch(projectListLoading());
+    dispatch(statusActions.loading("list"));
 
     firebaseService
       .database()
@@ -19,12 +21,12 @@ const loadProjects = () => dispatch =>
           const projects = snapshot.val();
 
           resolve();
-          dispatch(baseActions.set(projects));
-          dispatch(projectListSuccess(projects));
+          dispatch(entityActions.set(projects));
+          dispatch(statusActions.success("list"));
         },
         (error) => {
           reject(error);
-          dispatch(projectListFailure(error));
+          dispatch(statusActions.error("list", error));
         },
       );
   });
@@ -41,13 +43,9 @@ const toggleProject = key => (dispatch, getState) =>
     resolve();
   });
 
-const projectListLoading = makeActionCreator(actionTypes.PROJECTS_LIST_LOADING);
-const projectListSuccess = makeActionCreator(actionTypes.PROJECTS_LIST_SUCCESS, "projects");
-const projectListFailure = makeActionCreator(actionTypes.PROJECTS_LIST_FAILURE, "error");
 const projectListToggle = makeActionCreator(actionTypes.PROJECTS_LIST_TOGGLE, "key");
 
 const projectsActions = {
-  ...baseActions,
   loadProjects,
   toggleProject,
 };

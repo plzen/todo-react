@@ -4,7 +4,7 @@ const BaseActions = {
   SET: "SET",
 };
 
-const asPrefixedPair = prefix => key => `${prefix}_${key}`;
+const asPrefixedPair = prefix => key => `${prefix}_ENTITY_${key}`;
 
 const createEntityActionConstants = prefix => map(asPrefixedPair(prefix), BaseActions);
 
