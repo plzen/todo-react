@@ -1,6 +1,6 @@
-import * as validator from "../../../validators";
+import * as validator from "../../validators";
 
-export const validateForm = (fields) => {
+export const validateCreateProjectForm = (fields) => {
   const errors = {};
 
   const { projectName } = fields;

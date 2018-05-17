@@ -5,16 +5,16 @@ import PropTypes from "prop-types";
 
 import NewProjectForm from "./component";
 
-import * as projectCreate from "../../../store/projects/create";
+import { projectsSelectors, projectsActions } from "../../../store/projects";
 
 const NewProjectFormContainer = props => <NewProjectForm {...props} />;
 
 const mapStateToProps = state => ({
-  loading: projectCreate.isLoading(state),
+  loading: projectsSelectors.isCreateLoading(state),
 });
 
 const mapDispatchToProps = {
-  createProject: projectCreate.createProject,
+  createProject: projectsActions.createProject,
 };
 
 NewProjectFormContainer.propTypes = {

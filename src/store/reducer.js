@@ -6,7 +6,6 @@ import signin from "./signin";
 import signout from "./signout";
 import user from "./user";
 import { projectsReducer } from "./projects";
-import projectsCreate from "./projects/create";
 import projectsRemove from "./projects/remove";
 import projectsEdit from "./projects/edit";
 import tasksCreate from "./tasks/create";
@@ -18,7 +17,6 @@ export default combineReducers({
   signout,
   user,
   projects: projectsReducer,
-  projectsCreate,
   projectsRemove,
   projectsEdit,
   tasksCreate,
