@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import ProjectList from "./component";
 
 import { projectsActions, projectsSelectors } from "../../../store/projects";
-import * as projectEdit from "../../../store/projects/edit";
 
 class ProjectListContainer extends Component {
   componentDidMount() {
@@ -13,15 +12,15 @@ class ProjectListContainer extends Component {
   }
 
   render() {
-    const { projects, loading, activeProject } = this.props;
-    return <ProjectList projects={projects} loading={loading} activeProject={activeProject} />;
+    const { projects, loading, editProject } = this.props;
+    return <ProjectList projects={projects} loading={loading} editProject={editProject} />;
   }
 }
 
 const mapStateToProps = state => ({
   loading: projectsSelectors.isListLoading(state),
   projects: projectsSelectors.getEntities(state),
-  activeProject: projectEdit.getActiveProject(state),
+  editProject: projectsSelectors.getEditProject(state),
 });
 
 const mapDispatchToProps = {
@@ -32,7 +31,7 @@ ProjectListContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
   loadProjects: PropTypes.func.isRequired,
-  activeProject: PropTypes.string.isRequired,
+  editProject: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectListContainer);

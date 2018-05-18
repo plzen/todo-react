@@ -6,14 +6,14 @@ import ProjectItem from "./ProjectItem";
 import EditItem from "./EditItem";
 import { Loading } from "../../common";
 
-const ProjectListComponent = ({ projects, loading, activeProject }) => {
+const ProjectListComponent = ({ projects, loading, editProject }) => {
   if (loading) {
     return <Loading />;
   }
   return (
     <Container>
       {[...projects].map((project) => {
-        if (project.key === activeProject) {
+        if (project.key === editProject) {
           return <EditItem key={project.key} project={project} />;
         }
         return <ProjectItem key={project.key} project={project} />;
@@ -23,7 +23,7 @@ const ProjectListComponent = ({ projects, loading, activeProject }) => {
 };
 
 ProjectListComponent.propTypes = {
-  activeProject: PropTypes.string.isRequired,
+  editProject: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   projects: PropTypes.array.isRequired,
 };

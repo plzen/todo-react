@@ -91,6 +91,42 @@ const removeProject = key => dispatch =>
       });
   });
 
+const editProject = params => dispatch =>
+  new Promise((resolve, reject) => {
+    const { key, projectName } = params;
+
+    dispatch(statusActions.loading("edit", key));
+
+    const project = { name: projectName };
+
+    firebaseService
+      .database()
+      .ref(`projects/${key}`)
+      .update(project)
+      .then(() => {
+        resolve();
+        dispatch(entityActions.upsert(key, project));
+        dispatch(toggleEditProject(""));
+        dispatch(statusActions.success("edit", key));
+      })
+      .catch((error) => {
+        reject(error);
+        dispatch(statusActions.error("edit", error, key));
+      });
+  });
+
+const toggleEditProject = key => (dispatch, getState) =>
+  new Promise((resolve) => {
+    const state = getState();
+    if (state.projects.editProject === key) {
+      dispatch(projectEditToggle(""));
+    } else {
+      dispatch(projectEditToggle(key));
+    }
+
+    resolve();
+  });
+
 const toggleProject = key => (dispatch, getState) =>
   new Promise((resolve) => {
     const state = getState();
@@ -104,12 +140,15 @@ const toggleProject = key => (dispatch, getState) =>
   });
 
 const projectListToggle = makeActionCreator(actionTypes.PROJECTS_LIST_TOGGLE, "key");
+const projectEditToggle = makeActionCreator(actionTypes.PROJECTS_EDIT_TOGGLE, "key");
 
 const projectsActions = {
   createProject,
   loadProjects,
   removeProject,
+  editProject,
   toggleProject,
+  toggleEditProject,
 };
 
 export { projectsActions as default };

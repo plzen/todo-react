@@ -4,11 +4,12 @@ import PropTypes from "prop-types";
 
 import ProjectEditButton from "./component";
 
-import * as projectEdit from "../../../../../store/projects/edit";
+import { projectsActions } from "../../../../../store/projects";
 
 class ProjectEditButtonContainer extends Component {
   constructor(props) {
     super(props);
+
     this.onButtonClick = this.onButtonClick.bind(this);
   }
 
@@ -18,9 +19,9 @@ class ProjectEditButtonContainer extends Component {
 
     const {
       project: { key },
-      toggleProject,
+      toggleEditProject,
     } = this.props;
-    toggleProject(key);
+    toggleEditProject(key);
   }
 
   render() {
@@ -28,21 +29,15 @@ class ProjectEditButtonContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  loading: projectEdit.isLoading(state, props),
-  error: projectEdit.getError(state, props),
-});
-
 const mapDispatchToProps = {
-  editProject: projectEdit.editProject,
-  toggleProject: projectEdit.toggleProject,
+  toggleEditProject: projectsActions.toggleEditProject,
 };
 
 ProjectEditButtonContainer.propTypes = {
   project: PropTypes.shape({
     key: PropTypes.string.isRequired,
   }),
-  toggleProject: PropTypes.func.isRequired,
+  toggleEditProject: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectEditButtonContainer);
+export default connect(null, mapDispatchToProps)(ProjectEditButtonContainer);

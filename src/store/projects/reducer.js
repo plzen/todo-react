@@ -7,12 +7,15 @@ const initialState = {
   ids: [],
   status: {},
   activeProject: "",
+  editProject: "",
 };
 
 const baseReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case actionTypes.PROJECTS_LIST_TOGGLE:
       return { ...state, activeProject: action.key };
+    case actionTypes.PROJECTS_EDIT_TOGGLE:
+      return { ...state, editProject: action.key };
     default:
       return state;
   }

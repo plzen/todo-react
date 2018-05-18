@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import EditProjectForm from "./component";
 
-import * as projectEdit from "../../../../store/projects/edit";
+import { projectsActions, projectsSelectors } from "../../../../store/projects";
 
 class EditProjectFormContainer extends Component {
   constructor(props) {
@@ -16,9 +16,10 @@ class EditProjectFormContainer extends Component {
   cancel() {
     const {
       project: { key },
-      toggleProject,
+      toggleEditProject,
     } = this.props;
-    toggleProject(key);
+
+    toggleEditProject(key);
   }
 
   render() {
@@ -26,17 +27,23 @@ class EditProjectFormContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  loading: projectEdit.isLoading(state, props),
-  initialValues: {
-    key: props.project.key,
-    projectName: props.project.name,
-  },
-});
+const mapStateToProps = (state, props) => {
+  const {
+    project: { key },
+  } = props;
+
+  return {
+    loading: projectsSelectors.isEditLoading(state, key),
+    initialValues: {
+      key: props.project.key,
+      projectName: props.project.name,
+    },
+  };
+};
 
 const mapDispatchToProps = {
-  editProject: projectEdit.editProject,
-  toggleProject: projectEdit.toggleProject,
+  editProject: projectsActions.editProject,
+  toggleEditProject: projectsActions.toggleEditProject,
 };
 
 EditProjectFormContainer.propTypes = {
@@ -46,7 +53,7 @@ EditProjectFormContainer.propTypes = {
   }),
   loading: PropTypes.bool.isRequired,
   editProject: PropTypes.func.isRequired,
-  toggleProject: PropTypes.func.isRequired,
+  toggleEditProject: PropTypes.func.isRequired,
 };
 
 const editProjectForm = reduxForm({
