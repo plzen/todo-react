@@ -11,3 +11,5 @@ export const parseSignupErrors = (error) => {
 };
 
 export const parseSigninErrors = error => ({ _error: error.message });
+
+export const parseErrors = error => ({ _error: error.message });

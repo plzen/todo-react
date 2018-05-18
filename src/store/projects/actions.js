@@ -1,3 +1,4 @@
+import { isEmpty } from "ramda";
 import { SubmissionError, reset } from "redux-form";
 
 import makeActionCreator from "../shared/makeActionCreator";
@@ -8,7 +9,6 @@ import actionTypes from "./actionTypes";
 import firebaseService from "../../services/firebase";
 
 import { validateCreateProjectForm } from "./validator";
-import { isEmpty } from "../../utils";
 import { parseSigninErrors } from "../../utils/firebase";
 
 const entityActions = createEntityActionCreators("PROJECTS");

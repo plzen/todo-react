@@ -7,7 +7,6 @@ import signout from "./signout";
 import user from "./user";
 import { projectsReducer } from "./projects";
 import { tasksReducer } from "./tasks";
-import tasksCreate from "./tasks/create";
 
 export default combineReducers({
   signup,
@@ -16,6 +15,5 @@ export default combineReducers({
   user,
   projects: projectsReducer,
   tasks: tasksReducer,
-  tasksCreate,
   form,
 });

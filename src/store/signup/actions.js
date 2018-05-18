@@ -1,12 +1,12 @@
+import { isEmpty } from "ramda";
+import { SubmissionError } from "redux-form";
+
 import * as types from "./actionTypes";
 
 import firebaseService from "../../services/firebase";
 
-import { SubmissionError } from "redux-form";
-
 import { validateForm } from "./validator";
 
-import { isEmpty } from "../../utils";
 import { parseSignupErrors } from "../../utils/firebase";
 
 export const signupUser = values => dispatch =>

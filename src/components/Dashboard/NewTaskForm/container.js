@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import NewTaskForm from "./component";
 
-import * as taskCreate from "../../../store/tasks/create";
+import { tasksActions, tasksSelectors } from "../../../store/tasks";
 
 class NewTaskFormContainer extends Component {
   constructor(props) {
@@ -28,12 +28,18 @@ class NewTaskFormContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  loading: taskCreate.isLoading(state, props),
-});
+const mapStateToProps = (state, props) => {
+  const {
+    project: { key },
+  } = props;
+
+  return {
+    loading: tasksSelectors.isCreateLoading(state, key),
+  };
+};
 
 const mapDispatchToProps = {
-  createTask: taskCreate.createTask,
+  createTask: tasksActions.createTask,
 };
 
 NewTaskFormContainer.propTypes = {
