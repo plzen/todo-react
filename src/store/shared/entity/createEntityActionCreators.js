@@ -10,10 +10,16 @@ const createEntityActionCreators = (prefix) => {
         payload: { list, meta },
       };
     },
-    upsert(id, attributes, meta) {
+    upsert(key, attributes, meta) {
       return {
         type: ActionConstants.UPSERT,
-        payload: { id, attributes, meta },
+        payload: { key, attributes, meta },
+      };
+    },
+    remove(key, meta) {
+      return {
+        type: ActionConstants.REMOVE,
+        payload: { key, meta },
       };
     },
   };

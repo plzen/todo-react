@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ProjectRemoveButton from "./component";
 
-import * as projectRemove from "../../../../../store/projects/remove";
+import { projectsActions, projectsSelectors } from "../../../../../store/projects";
 
 class ProjectRemoveButtonContainer extends Component {
   constructor(props) {
@@ -74,19 +74,26 @@ class ProjectRemoveButtonContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  loading: projectRemove.isLoading(state, props),
-  error: projectRemove.getError(state, props),
-});
+const mapStateToProps = (state, props) => {
+  const {
+    project: { key },
+  } = props;
+
+  return {
+    loading: projectsSelectors.isRemoveLoading(state, key),
+    error: projectsSelectors.getRemoveError(state, key),
+  };
+};
 
 const mapDispatchToProps = {
-  removeProject: projectRemove.removeProject,
+  removeProject: projectsActions.removeProject,
 };
 
 ProjectRemoveButtonContainer.propTypes = {
   project: PropTypes.shape({
+    key: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
   removeProject: PropTypes.func.isRequired,

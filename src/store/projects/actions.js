@@ -72,6 +72,25 @@ const loadProjects = () => dispatch =>
       );
   });
 
+const removeProject = key => dispatch =>
+  new Promise((resolve, reject) => {
+    dispatch(statusActions.loading("remove", key));
+
+    firebaseService
+      .database()
+      .ref(`projects/${key}`)
+      .remove()
+      .then(() => {
+        resolve();
+        dispatch(entityActions.remove(key));
+        dispatch(statusActions.success("remove", key));
+      })
+      .catch((error) => {
+        reject(error);
+        dispatch(statusActions.error("remove", error, key));
+      });
+  });
+
 const toggleProject = key => (dispatch, getState) =>
   new Promise((resolve) => {
     const state = getState();
@@ -89,6 +108,7 @@ const projectListToggle = makeActionCreator(actionTypes.PROJECTS_LIST_TOGGLE, "k
 const projectsActions = {
   createProject,
   loadProjects,
+  removeProject,
   toggleProject,
 };
 

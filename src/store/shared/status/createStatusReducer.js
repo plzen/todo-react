@@ -12,7 +12,7 @@ const loading = (state, type, key) => {
           ...state.status[type],
           [key]: {
             loading: true,
-            error: false,
+            error: null,
           },
         },
       },

@@ -2,15 +2,11 @@ import { defaultMemoize } from "reselect";
 import { pathOr } from "ramda";
 
 const createStatusSelectors = (sliceKey, action) => {
-  const getPath = (type, props) => {
-    const key = pathOr(null, ["entity", "key"], props);
-    return key ? [sliceKey, "status", action, key, type] : [sliceKey, "status", action, type];
-  };
+  const getPath = (type, key) =>
+    (key ? [sliceKey, "status", action, key, type] : [sliceKey, "status", action, type]);
 
-  const isLoading = defaultMemoize((state, props) =>
-    pathOr(false, getPath("loading", props), state));
-
-  const getError = defaultMemoize((state, props) => pathOr(null, getPath("error", props), state));
+  const isLoading = defaultMemoize((state, key) => pathOr(false, getPath("loading", key), state));
+  const getError = defaultMemoize((state, key) => pathOr(null, getPath("error", key), state));
 
   return {
     isLoading,
