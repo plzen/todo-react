@@ -1,4 +1,4 @@
-import { fromPairs, indexOf, keys, map, omit, path, without } from "ramda";
+import { fromPairs, indexOf, keys, map, omit, path, uniq, without } from "ramda";
 
 import createEntityActionConstants from "./createEntityActionConstants";
 
@@ -18,11 +18,21 @@ const set = (state, list) => ({
   ids: asIds(list),
 });
 
+const merge = (state, list) => ({
+  ...state,
+  byId: {
+    ...(state.byId || {}),
+    ...asById(list),
+  },
+  ids: uniq((state.ids || []).concat(asIds(list))),
+});
+
 const upsert = (state, key, attributes) => ({
   ...state,
   byId: {
     ...(state.byId || {}),
     [key]: {
+      ...state.byId[key],
       ...attributes,
       key,
     },
@@ -45,6 +55,8 @@ const createEntityReducer = (prefix) => {
     switch (action.type) {
       case ActionConstants.SET:
         return reducerFun(set(state, payload.list), action);
+      case ActionConstants.MERGE:
+        return reducerFun(merge(state, payload.list), action);
       case ActionConstants.UPSERT:
         return reducerFun(upsert(state, payload.key, payload.attributes), action);
       case ActionConstants.REMOVE:

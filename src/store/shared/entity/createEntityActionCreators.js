@@ -10,6 +10,12 @@ const createEntityActionCreators = (prefix) => {
         payload: { list, meta },
       };
     },
+    merge(list, meta) {
+      return {
+        type: ActionConstants.MERGE,
+        payload: { list, meta },
+      };
+    },
     upsert(key, attributes, meta) {
       return {
         type: ActionConstants.UPSERT,

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import ProjectItem from "./component";
 
 import { projectsActions, projectsSelectors } from "../../../../store/projects";
-import * as taskList from "../../../../store/tasks/list";
+import { tasksActions } from "../../../../store/tasks";
 
 class ProjectItemContainer extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   toggle: projectsActions.toggleProject,
-  loadTasks: taskList.loadTasks,
+  loadTasks: tasksActions.loadTasks,
 };
 
 ProjectItemContainer.propTypes = {

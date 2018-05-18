@@ -2,6 +2,7 @@ import { map } from "ramda";
 
 const BaseActions = {
   SET: "SET",
+  MERGE: "MERGE",
   UPSERT: "UPSERT",
   REMOVE: "REMOVE",
 };
