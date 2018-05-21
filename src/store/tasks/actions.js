@@ -27,7 +27,7 @@ export const loadTasks = key => dispatch =>
             const newTask = task;
             newTask.projectKey = key;
             return task;
-          }, snapshot.val());
+          }, snapshot.val() || {});
 
           resolve();
           dispatch(entityActions.merge(tasks));

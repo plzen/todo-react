@@ -25,13 +25,14 @@ const createProject = values => dispatch =>
       reject(submissionError);
       dispatch(statusActions.error("create", submissionError));
     } else {
+      const { uid, projectName } = values;
       const project = {
-        name: values.projectName,
+        name: projectName,
         createdAt: Date(),
       };
       firebaseService
         .database()
-        .ref("projects")
+        .ref(`projects/${uid}`)
         .push(project)
         .then((ref) => {
           resolve();
@@ -49,13 +50,13 @@ const createProject = values => dispatch =>
     }
   });
 
-const loadProjects = () => dispatch =>
+const loadProjects = uid => dispatch =>
   new Promise((resolve, reject) => {
     dispatch(statusActions.loading("list"));
 
     firebaseService
       .database()
-      .ref("projects")
+      .ref(`projects/${uid}`)
       .once(
         "value",
         (snapshot) => {
@@ -72,13 +73,13 @@ const loadProjects = () => dispatch =>
       );
   });
 
-const removeProject = key => dispatch =>
+const removeProject = (uid, key) => dispatch =>
   new Promise((resolve, reject) => {
     dispatch(statusActions.loading("remove", key));
 
     firebaseService
       .database()
-      .ref(`projects/${key}`)
+      .ref(`projects/${uid}/${key}`)
       .remove()
       .then(() => {
         resolve();
@@ -93,7 +94,7 @@ const removeProject = key => dispatch =>
 
 const editProject = params => dispatch =>
   new Promise((resolve, reject) => {
-    const { key, projectName } = params;
+    const { uid, key, projectName } = params;
 
     dispatch(statusActions.loading("edit", key));
 
@@ -101,7 +102,7 @@ const editProject = params => dispatch =>
 
     firebaseService
       .database()
-      .ref(`projects/${key}`)
+      .ref(`projects/${uid}/${key}`)
       .update(project)
       .then(() => {
         resolve();

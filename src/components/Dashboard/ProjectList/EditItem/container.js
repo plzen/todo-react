@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import EditProjectForm from "./component";
 
 import { projectsActions, projectsSelectors } from "../../../../store/projects";
+import { userSelectors } from "../../../../store/user";
 
 class EditProjectFormContainer extends Component {
   constructor(props) {
@@ -29,14 +30,16 @@ class EditProjectFormContainer extends Component {
 
 const mapStateToProps = (state, props) => {
   const {
-    project: { key },
+    project: { key, name },
   } = props;
+  const { uid } = userSelectors.getUser(state);
 
   return {
     loading: projectsSelectors.isEditLoading(state, key),
     initialValues: {
-      key: props.project.key,
-      projectName: props.project.name,
+      uid,
+      key,
+      projectName: name,
     },
   };
 };
