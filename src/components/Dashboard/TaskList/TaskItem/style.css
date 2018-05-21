@@ -10,3 +10,7 @@
 .dashboard-task-item .checkbox {
   flex: 1;
 }
+
+.dashboard-task-item .checked label {
+  text-decoration: line-through;
+}

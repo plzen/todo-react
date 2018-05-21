@@ -4,33 +4,47 @@ import PropTypes from "prop-types";
 
 import TaskItem from "./component";
 
-// import { tasksSelectors } from "../../../../store/tasks";
+import { tasksActions, tasksSelectors } from "../../../../store/tasks";
 
 class TaskItemContainer extends Component {
   constructor(props) {
     super(props);
-    // this.handleToggle = this.handleToggle.bind(this);
+    this.handleToggleCompleted = this.handleToggleCompleted.bind(this);
+  }
+
+  handleToggleCompleted() {
+    const { task, completeTask } = this.props;
+    completeTask(task.projectKey, task.key, !task.completed);
   }
 
   render() {
-    const { task, editTask } = this.props;
-    // if (task.key === editTask) {
-
-    // }
-    return <TaskItem task={task} />;
+    const { task, loading } = this.props;
+    return (
+      <TaskItem task={task} loading={loading} toggleCompletedTask={this.handleToggleCompleted} />
+    );
   }
 }
 
-const mapStateToProps = state => ({
-  // editTask: tasksSelectors.getEditTask(state),
-});
+const mapStateToProps = (state, props) => {
+  const {
+    task: { key },
+  } = props;
 
-const mapDispatchToProps = {};
+  return {
+    loading: tasksSelectors.isCompleteLoading(state, key),
+  };
+};
+
+const mapDispatchToProps = {
+  completeTask: tasksActions.completeTask,
+};
 
 TaskItemContainer.propTypes = {
   task: PropTypes.shape({
     key: PropTypes.string.isRequired,
   }).isRequired,
+  loading: PropTypes.bool.isRequired,
+  completeTask: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskItemContainer);
