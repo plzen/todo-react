@@ -4,8 +4,7 @@ import PropTypes from "prop-types";
 
 import TaskItem from "./component";
 
-// import * as projectList from "../../../../store/projects/list";
-// import * as taskList from "../../../../store/tasks/list";
+// import { tasksSelectors } from "../../../../store/tasks";
 
 class TaskItemContainer extends Component {
   constructor(props) {
@@ -14,12 +13,17 @@ class TaskItemContainer extends Component {
   }
 
   render() {
-    const { task } = this.props;
+    const { task, editTask } = this.props;
+    // if (task.key === editTask) {
+
+    // }
     return <TaskItem task={task} />;
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  // editTask: tasksSelectors.getEditTask(state),
+});
 
 const mapDispatchToProps = {};
 

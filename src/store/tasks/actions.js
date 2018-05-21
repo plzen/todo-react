@@ -1,9 +1,11 @@
 import { isEmpty, map } from "ramda";
 import { SubmissionError, reset } from "redux-form";
 
+import makeActionCreator from "../shared/makeActionCreator";
 import { createEntityActionCreators } from "../shared/entity";
 import { createStatusActionCreators } from "../shared/status";
 
+import actionTypes from "./actionTypes";
 import firebaseService from "../../services/firebase";
 
 import { validateCreateTaskForm } from "./validator";
@@ -75,9 +77,49 @@ const createTask = (projectKey, values) => dispatch =>
     }
   });
 
+const editTask = params => dispatch =>
+  new Promise((resolve, reject) => {
+    const { projectKey, key, taskName } = params;
+
+    dispatch(statusActions.loading("edit", key));
+
+    const task = { name: taskName };
+
+    firebaseService
+      .database()
+      .ref(`tasks/${projectKey}/${key}`)
+      .update(task)
+      .then(() => {
+        resolve();
+        dispatch(entityActions.upsert(key, task));
+        dispatch(toggleEditTask(""));
+        dispatch(statusActions.success("edit", key));
+      })
+      .catch((error) => {
+        reject(error);
+        dispatch(statusActions.error("edit", error, key));
+      });
+  });
+
+const toggleEditTask = key => (dispatch, getState) =>
+  new Promise((resolve) => {
+    const state = getState();
+    if (state.tasks.editTask === key) {
+      dispatch(taskEditToggle(""));
+    } else {
+      dispatch(taskEditToggle(key));
+    }
+
+    resolve();
+  });
+
+const taskEditToggle = makeActionCreator(actionTypes.TASKS_EDIT_TOGGLE, "key");
+
 const tasksActions = {
   loadTasks,
   createTask,
+  editTask,
+  toggleEditTask,
 };
 
 export { tasksActions as default };

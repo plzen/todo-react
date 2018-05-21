@@ -6,8 +6,10 @@ import TaskList from "./component";
 
 import { tasksSelectors } from "../../../store/tasks";
 
-const TaskListContainer = ({ loading, tasks, error }) => (
-  <TaskList tasks={tasks} loading={loading} error={error} />
+const TaskListContainer = ({
+  loading, tasks, error, editTask,
+}) => (
+  <TaskList tasks={tasks} loading={loading} error={error} editTask={editTask} />
 );
 
 const mapStateToProps = (state, props) => {
@@ -19,6 +21,7 @@ const mapStateToProps = (state, props) => {
     loading: tasksSelectors.isListLoading(state, key),
     tasks: tasksSelectors.getTasks(state, key),
     error: tasksSelectors.getListError(state, key),
+    editTask: tasksSelectors.getEditTask(state),
   };
 };
 
@@ -28,6 +31,7 @@ TaskListContainer.propTypes = {
   error: PropTypes.shape({
     message: PropTypes.string,
   }),
+  editTask: PropTypes.string.isRequired,
 };
 
 TaskListContainer.defaultProps = {

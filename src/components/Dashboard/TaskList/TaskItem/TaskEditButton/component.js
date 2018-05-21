@@ -2,12 +2,12 @@ import React from "react";
 import { Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-const ProjectEditButtonComponent = ({ onClick }) => (
+const TaskEditButtonComponent = ({ onClick }) => (
   <Icon name="edit" size="large" onClick={onClick} />
 );
 
-ProjectEditButtonComponent.propTypes = {
+TaskEditButtonComponent.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default ProjectEditButtonComponent;
+export default TaskEditButtonComponent;
