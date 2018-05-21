@@ -4,16 +4,16 @@ import { reduxForm } from "redux-form";
 
 import SignUpForm from "./component";
 
-import { signupUser } from "../../../store/signup";
+import { userActions, userSelectors } from "../../../store/user";
 
 const SignUpFormContainer = props => <SignUpForm {...props} />;
 
 const mapStateToProps = state => ({
-  loading: state.signup.loading,
+  loading: userSelectors.isSigningUp(state),
 });
 
 const mapDispatchToProps = {
-  signupUser,
+  signupUser: userActions.signupUser,
 };
 
 const signupForm = reduxForm({

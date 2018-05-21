@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 
 import PrivateRoute from "./component";
 
-import * as user from "../../../store/user";
+import { userSelectors } from "../../../store/user";
 
 const PrivateRouteContainer = props => <PrivateRoute {...props} loggedIn={props.loggedIn} />;
 
 const mapStateToProps = state => ({
-  loggedIn: user.isLoggedIn(state),
+  loggedIn: userSelectors.isLoggedIn(state),
 });
 
 PrivateRouteContainer.propTypes = {

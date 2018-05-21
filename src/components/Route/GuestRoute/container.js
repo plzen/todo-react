@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 
 import GuestRoute from "./component";
 
-import * as user from "../../../store/user";
+import { userSelectors } from "../../../store/user";
 
 const GuestRouteContainer = props => <GuestRoute {...props} loggedIn={props.loggedIn} />;
 
 const mapStateToProps = state => ({
-  loggedIn: user.isLoggedIn(state),
+  loggedIn: userSelectors.isLoggedIn(state),
 });
 
 GuestRouteContainer.propTypes = {

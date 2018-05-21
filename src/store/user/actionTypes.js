@@ -1,2 +1,9 @@
-export const USER_SIGNED_IN = "USER_SIGNED_IN";
-export const USER_SIGNED_OUT = "USER_SIGNED_OUT";
+import { createStatusActionConstants } from "../shared/status";
+
+const UserConstants = {
+  ...createStatusActionConstants("USER"),
+  USER_SIGNED_IN: "USER_SIGNED_IN",
+  USER_SIGNED_OUT: "USER_SIGNED_OUT",
+};
+
+export default UserConstants;

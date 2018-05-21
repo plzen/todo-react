@@ -1,8 +1,27 @@
 import * as validator from "../../validators";
 
-export const validateForm = (fields) => {
+export const validateSignInForm = (fields) => {
   const errors = {};
 
+  const { email, password } = fields;
+
+  if (!validator.required(email)) {
+    errors.email = "The field is required";
+  } else if (!validator.email(email)) {
+    errors.email = "Email is not valid";
+  }
+
+  if (!validator.required(password)) {
+    errors.password = "The field is required";
+  }
+
+  return errors;
+};
+
+export const validateSignUpForm = (fields) => {
+  const errors = {};
+
+  // eslint-disable-next-line camelcase
   const { email, password, confirm_password } = fields;
 
   if (!validator.required(email)) {
@@ -22,7 +41,7 @@ export const validateForm = (fields) => {
     errors.confirm_password = "The field is required";
   } else if (
     password &&
-    confirm_password &&
+    confirm_password && // eslint-disable-line camelcase
     validator.password(password) &&
     !validator.equals(password, confirm_password)
   ) {

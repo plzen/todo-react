@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import TodoApp from "./component";
 
-import * as user from "../../store/user";
+import { userActions, userSelectors } from "../../store/user";
 
 class TodoAppContainer extends Component {
   componentDidMount() {
@@ -17,11 +17,11 @@ class TodoAppContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  restoring: user.isRestoring(state),
+  restoring: userSelectors.isRestoring(state),
 });
 
 const mapDispatchToProps = {
-  monitorSession: user.monitorSession,
+  monitorSession: userActions.monitorSession,
 };
 
 TodoAppContainer.propTypes = {
