@@ -12,13 +12,13 @@ import "./style.css";
 const ProjectItemComponent = ({ active, project, toggle }) => (
   <Accordion styled fluid className="dashboard-project-item">
     <Accordion.Title active={active} index={project.id} onClick={toggle}>
-      <Grid columns={4}>
-        <Grid.Column>
+      <Grid>
+        <Grid.Column width={14}>
           <Icon name="dropdown" />
           {project.name}
         </Grid.Column>
         {!active && (
-          <Grid.Column floated="right" textAlign="right">
+          <Grid.Column width={2} textAlign="right">
             <ProjectEditButton project={project} />
             <ProjectRemoveButton project={project} />
           </Grid.Column>

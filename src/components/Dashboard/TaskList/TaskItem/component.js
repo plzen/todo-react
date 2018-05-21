@@ -8,10 +8,8 @@ import "./style.css";
 
 const TaskItemComponent = ({ task }) => (
   <div className="dashboard-task-item">
-    <div>
-      <Checkbox label={task.name} />
-      <TaskEditButton task={task} />
-    </div>
+    <Checkbox label={task.name} className="checkbox" />
+    <TaskEditButton task={task} />
   </div>
 );
 
