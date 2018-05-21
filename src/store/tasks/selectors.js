@@ -7,6 +7,7 @@ const entitySelectors = createEntitySelectors("tasks");
 const listSelectors = createStatusSelectors("tasks", "list");
 const createSelectors = createStatusSelectors("tasks", "create");
 const editSelectors = createStatusSelectors("tasks", "edit");
+const removeSelectors = createStatusSelectors("tasks", "remove");
 
 const getEditTask = state => path(["tasks", "editTask"], state);
 
@@ -19,6 +20,9 @@ const getTasks = (state, projectKey) => {
 const isCreateLoading = (state, key) => createSelectors.isLoading(state, key);
 const isEditLoading = (state, key) => editSelectors.isLoading(state, key);
 
+const isRemoveLoading = (state, key) => removeSelectors.isLoading(state, key);
+const getRemoveError = (state, key) => removeSelectors.getError(state, key);
+
 const tasksSelectors = {
   ...entitySelectors,
   getEditTask,
@@ -27,6 +31,8 @@ const tasksSelectors = {
   getTasks,
   isCreateLoading,
   isEditLoading,
+  isRemoveLoading,
+  getRemoveError,
 };
 
 export default tasksSelectors;

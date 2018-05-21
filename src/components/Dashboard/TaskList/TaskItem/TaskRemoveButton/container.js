@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import ProjectRemoveButton from "./component";
+import TaskRemoveButton from "./component";
 
-import * as projectRemove from "../../../../../store/projects/remove";
+import { tasksActions, tasksSelectors } from "../../../../../store/tasks";
 
-class ProjectRemoveButtonContainer extends Component {
+class TaskRemoveButtonContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -45,23 +45,23 @@ class ProjectRemoveButtonContainer extends Component {
 
   remove() {
     const {
-      project: { key },
-      removeProject,
+      task: { key, projectKey },
+      removeTask,
     } = this.props;
 
-    removeProject(key);
+    removeTask(projectKey, key);
   }
 
   render() {
     const {
-      project: { name },
+      task: { name },
       loading,
       error,
     } = this.props;
     const { modalVisible } = this.state;
 
     return (
-      <ProjectRemoveButton
+      <TaskRemoveButton
         open={modalVisible}
         name={name}
         loading={loading}
@@ -74,22 +74,30 @@ class ProjectRemoveButtonContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  loading: projectRemove.isLoading(state, props),
-  error: projectRemove.getError(state, props),
-});
+const mapStateToProps = (state, props) => {
+  const {
+    task: { key },
+  } = props;
 
-const mapDispatchToProps = {
-  removeProject: projectRemove.removeProject,
+  return {
+    loading: tasksSelectors.isRemoveLoading(state, key),
+    error: tasksSelectors.getRemoveError(state, key),
+  };
 };
 
-ProjectRemoveButtonContainer.propTypes = {
-  project: PropTypes.shape({
+const mapDispatchToProps = {
+  removeTask: tasksActions.removeTask,
+};
+
+TaskRemoveButtonContainer.propTypes = {
+  task: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    projectKey: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }),
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
-  removeProject: PropTypes.func.isRequired,
+  removeTask: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectRemoveButtonContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskRemoveButtonContainer);

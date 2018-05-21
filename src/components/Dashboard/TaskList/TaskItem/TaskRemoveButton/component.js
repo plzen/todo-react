@@ -20,7 +20,7 @@ Content.propTypes = {
   error: PropTypes.object,
 };
 
-const ProjectRemoveButtonComponent = ({
+const TaskRemoveButtonComponent = ({
   open,
   name,
   loading,
@@ -31,9 +31,9 @@ const ProjectRemoveButtonComponent = ({
 }) => (
   <Modal
     open={open}
-    trigger={<Icon name="remove" size="large" onClick={handleOpen} />}
+    trigger={<Icon name="remove" size="large" onClick={handleOpen} link />}
     onClose={handleClose}
-    header="Delete project"
+    header="Delete task"
     content={<Content name={name} error={error} />}
     actions={[
       {
@@ -55,7 +55,7 @@ const ProjectRemoveButtonComponent = ({
   />
 );
 
-ProjectRemoveButtonComponent.propTypes = {
+TaskRemoveButtonComponent.propTypes = {
   open: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
@@ -65,4 +65,4 @@ ProjectRemoveButtonComponent.propTypes = {
   handleActions: PropTypes.func.isRequired,
 };
 
-export default ProjectRemoveButtonComponent;
+export default TaskRemoveButtonComponent;

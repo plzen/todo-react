@@ -101,6 +101,25 @@ const editTask = params => dispatch =>
       });
   });
 
+const removeTask = (projectKey, key) => dispatch =>
+  new Promise((resolve, reject) => {
+    dispatch(statusActions.loading("remove", key));
+
+    firebaseService
+      .database()
+      .ref(`tasks/${projectKey}/${key}`)
+      .remove()
+      .then(() => {
+        resolve();
+        dispatch(entityActions.remove(key));
+        dispatch(statusActions.success("remove", key));
+      })
+      .catch((error) => {
+        reject(error);
+        dispatch(statusActions.error("remove", error, key));
+      });
+  });
+
 const toggleEditTask = key => (dispatch, getState) =>
   new Promise((resolve) => {
     const state = getState();
@@ -119,6 +138,7 @@ const tasksActions = {
   loadTasks,
   createTask,
   editTask,
+  removeTask,
   toggleEditTask,
 };
 
