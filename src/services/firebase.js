@@ -14,3 +14,7 @@ class FirebaseService {
 }
 
 export default new FirebaseService().app;
+
+const { TIMESTAMP } = firebase.database.ServerValue;
+
+export { TIMESTAMP };

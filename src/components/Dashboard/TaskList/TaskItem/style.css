@@ -5,6 +5,13 @@
   margin-bottom: 5px;
   display: flex;
   flex-direction: row;
+  align-items: center;
+}
+
+.dashboard-task-priority-controls {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
 }
 
 .dashboard-task-item .checkbox {

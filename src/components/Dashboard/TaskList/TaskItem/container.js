@@ -18,9 +18,18 @@ class TaskItemContainer extends Component {
   }
 
   render() {
-    const { task, loading } = this.props;
+    const {
+      task, loading, first, last,
+    } = this.props;
+
     return (
-      <TaskItem task={task} loading={loading} toggleCompletedTask={this.handleToggleCompleted} />
+      <TaskItem
+        task={task}
+        loading={loading}
+        enabledUp={!first}
+        enabledDown={!last}
+        toggleCompletedTask={this.handleToggleCompleted}
+      />
     );
   }
 }
@@ -45,6 +54,8 @@ TaskItemContainer.propTypes = {
   }).isRequired,
   loading: PropTypes.bool.isRequired,
   completeTask: PropTypes.func.isRequired,
+  first: PropTypes.bool.isRequired,
+  last: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskItemContainer);

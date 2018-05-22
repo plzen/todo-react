@@ -1,4 +1,4 @@
-import { filter, path, reduce } from "ramda";
+import { filter, path, reduce, sort } from "ramda";
 import { createSelector } from "reselect";
 
 import { createEntitySelectors } from "../shared/entity";
@@ -10,6 +10,8 @@ const createSelectors = createStatusSelectors("tasks", "create");
 const editSelectors = createStatusSelectors("tasks", "edit");
 const removeSelectors = createStatusSelectors("tasks", "remove");
 const completeSelectors = createStatusSelectors("tasks", "complete");
+const moveUpSelectors = createStatusSelectors("tasks", "move-up");
+const moveDownSelectors = createStatusSelectors("tasks", "move-down");
 
 const getEditTask = state => path(["tasks", "editTask"], state);
 
@@ -17,7 +19,8 @@ const isListLoading = (state, key) => listSelectors.isLoading(state, key);
 const getListError = (state, key) => listSelectors.getError(state, key);
 const getTasks = (state, projectKey) => {
   const tasks = entitySelectors.getEntities(state);
-  return filter(task => task.projectKey === projectKey, tasks);
+  const filtered = filter(task => task.projectKey === projectKey, tasks);
+  return sort((a, b) => a.position - b.position, filtered);
 };
 const isAllCompleted = createSelector(
   getTasks,
@@ -30,6 +33,8 @@ const isRemoveLoading = (state, key) => removeSelectors.isLoading(state, key);
 const getRemoveError = (state, key) => removeSelectors.getError(state, key);
 
 const isCompleteLoading = (state, key) => completeSelectors.isLoading(state, key);
+const isMoveUpLoading = (state, key) => moveUpSelectors.isLoading(state, key);
+const isMoveDownLoading = (state, key) => moveDownSelectors.isLoading(state, key);
 
 const tasksSelectors = {
   ...entitySelectors,
@@ -43,6 +48,8 @@ const tasksSelectors = {
   isRemoveLoading,
   getRemoveError,
   isCompleteLoading,
+  isMoveUpLoading,
+  isMoveDownLoading,
 };
 
 export default tasksSelectors;

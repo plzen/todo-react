@@ -22,11 +22,14 @@ const TaskListComponent = ({
           <p>Well Done! You’re successfully completed all the task.</p>
         </Message>
       )}
-      {[...tasks].map((task) => {
+      {[...tasks].map((task, index) => {
         if (task.key === editTask) {
           return <EditItem key={task.key} task={task} />;
         }
-        return <TaskItem key={task.key} task={task} />;
+
+        const first = index === 0;
+        const last = index === tasks.length - 1;
+        return <TaskItem key={task.key} task={task} first={first} last={last} />;
       })}
     </Container>
   );

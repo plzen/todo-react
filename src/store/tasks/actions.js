@@ -1,4 +1,4 @@
-import { isEmpty, map } from "ramda";
+import { forEachObjIndexed, isEmpty } from "ramda";
 import { SubmissionError, reset } from "redux-form";
 
 import makeActionCreator from "../shared/makeActionCreator";
@@ -6,7 +6,7 @@ import { createEntityActionCreators } from "../shared/entity";
 import { createStatusActionCreators } from "../shared/status";
 
 import actionTypes from "./actionTypes";
-import firebaseService from "../../services/firebase";
+import firebaseService, { TIMESTAMP } from "../../services/firebase";
 
 import { validateCreateTaskForm } from "./validator";
 
@@ -25,11 +25,7 @@ export const loadTasks = key => dispatch =>
       .once(
         "value",
         (snapshot) => {
-          const tasks = map((task) => {
-            const newTask = task;
-            newTask.projectKey = key;
-            return task;
-          }, snapshot.val() || {});
+          const tasks = snapshot.val() || {};
 
           resolve();
           dispatch(entityActions.merge(tasks));
@@ -42,20 +38,21 @@ export const loadTasks = key => dispatch =>
       );
   });
 
-const createTask = (projectKey, values) => dispatch =>
+const createTask = (projectKey, params) => dispatch =>
   new Promise((resolve, reject) => {
     dispatch(statusActions.loading("create", projectKey));
 
     // Validate form locally
-    const errors = validateCreateTaskForm(values);
+    const errors = validateCreateTaskForm(params);
     if (!isEmpty(errors)) {
       const submissionError = new SubmissionError(errors);
       reject(submissionError);
       dispatch(statusActions.error("create", submissionError, projectKey));
     } else {
       const task = {
-        name: values.taskName,
+        name: params.taskName,
         createdAt: Date(),
+        position: TIMESTAMP,
         projectKey,
       };
       firebaseService
@@ -141,6 +138,104 @@ const removeTask = (projectKey, key) => dispatch =>
       });
   });
 
+const moveUpTask = (projectKey, key) => dispatch =>
+  new Promise((resolve, reject) => {
+    dispatch(statusActions.loading("move-up", key));
+
+    firebaseService
+      .database()
+      .ref(`tasks/${projectKey}`)
+      .once("value")
+      .then((snapshot) => {
+        const tasks = snapshot.val() || {};
+
+        const currentTask = tasks[key];
+
+        let prevKey;
+        let prevPosition;
+        forEachObjIndexed((taskValue, taskKey) => {
+          if (
+            taskValue.position < currentTask.position &&
+            (taskValue.position > prevPosition || prevPosition === undefined)
+          ) {
+            prevPosition = taskValue.position;
+            prevKey = taskKey;
+          }
+        }, tasks);
+
+        const prevTask = tasks[prevKey];
+
+        prevTask.position = currentTask.position;
+        currentTask.position = prevPosition;
+
+        return firebaseService
+          .database()
+          .ref(`tasks/${projectKey}`)
+          .update({ [prevKey]: prevTask, [key]: currentTask })
+          .then(() => {
+            dispatch(entityActions.upsert(prevKey, prevTask));
+            dispatch(entityActions.upsert(key, currentTask));
+          });
+      })
+      .then(() => {
+        resolve();
+        dispatch(statusActions.success("move-up", key));
+      })
+      .catch((error) => {
+        reject(error);
+        dispatch(statusActions.error("move-up", error, key));
+      });
+  });
+
+const moveDownTask = (projectKey, key) => dispatch =>
+  new Promise((resolve, reject) => {
+    dispatch(statusActions.loading("move-down", key));
+
+    firebaseService
+      .database()
+      .ref(`tasks/${projectKey}`)
+      .once("value")
+      .then((snapshot) => {
+        const tasks = snapshot.val() || {};
+
+        const currentTask = tasks[key];
+
+        let nextKey;
+        let nextPosition;
+        forEachObjIndexed((taskValue, taskKey) => {
+          if (
+            taskValue.position > currentTask.position &&
+            (taskValue.position < nextPosition || nextPosition === undefined)
+          ) {
+            nextPosition = taskValue.position;
+            nextKey = taskKey;
+          }
+        }, tasks);
+
+        const nextTask = tasks[nextKey];
+
+        nextTask.position = currentTask.position;
+        currentTask.position = nextPosition;
+
+        return firebaseService
+          .database()
+          .ref(`tasks/${projectKey}`)
+          .update({ [nextKey]: nextTask, [key]: currentTask })
+          .then(() => {
+            dispatch(entityActions.upsert(nextKey, nextTask));
+            dispatch(entityActions.upsert(key, currentTask));
+          });
+      })
+      .then(() => {
+        resolve();
+        dispatch(statusActions.success("move-down", key));
+      })
+      .catch((error) => {
+        reject(error);
+        dispatch(statusActions.error("move-down", error, key));
+      });
+  });
+
 const toggleEditTask = key => (dispatch, getState) =>
   new Promise((resolve) => {
     const state = getState();
@@ -162,6 +257,8 @@ const tasksActions = {
   removeTask,
   completeTask,
   toggleEditTask,
+  moveUpTask,
+  moveDownTask,
 };
 
 export { tasksActions as default };
