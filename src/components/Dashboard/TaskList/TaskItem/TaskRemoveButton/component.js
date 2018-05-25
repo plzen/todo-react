@@ -35,6 +35,7 @@ const TaskRemoveButtonComponent = ({
     onClose={handleClose}
     header="Delete task"
     content={<Content name={name} error={error} />}
+    size="tiny"
     actions={[
       {
         key: "delete",

@@ -35,6 +35,7 @@ const ProjectRemoveButtonComponent = ({
     onClose={handleClose}
     header="Delete project"
     content={<Content name={name} error={error} />}
+    size="tiny"
     actions={[
       {
         key: "delete",

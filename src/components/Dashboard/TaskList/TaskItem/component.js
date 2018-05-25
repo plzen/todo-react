@@ -8,6 +8,7 @@ import TaskRemoveButton from "./TaskRemoveButton";
 import TaskUpButton from "./TaskUpButton";
 import TaskDownButton from "./TaskDownButton";
 import TaskDeadlineButton from "./TaskDeadlineButton";
+import TaskCommentsButton from "./TaskCommentsButton";
 
 import "./style.css";
 
@@ -36,6 +37,7 @@ const TaskItemComponent = ({
       <div className={task.completed ? "completed" : ""}>{task.name}</div>
       {task.deadline && <Deadline task={task} />}
     </div>
+    <TaskCommentsButton task={task} />
     <TaskDeadlineButton task={task} />
     <TaskEditButton task={task} />
     <TaskRemoveButton task={task} />
