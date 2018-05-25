@@ -12,6 +12,7 @@ const removeSelectors = createStatusSelectors("tasks", "remove");
 const completeSelectors = createStatusSelectors("tasks", "complete");
 const moveUpSelectors = createStatusSelectors("tasks", "move-up");
 const moveDownSelectors = createStatusSelectors("tasks", "move-down");
+const deadlineSelectors = createStatusSelectors("tasks", "deadline");
 
 const getEditTask = state => path(["tasks", "editTask"], state);
 
@@ -35,6 +36,7 @@ const getRemoveError = (state, key) => removeSelectors.getError(state, key);
 const isCompleteLoading = (state, key) => completeSelectors.isLoading(state, key);
 const isMoveUpLoading = (state, key) => moveUpSelectors.isLoading(state, key);
 const isMoveDownLoading = (state, key) => moveDownSelectors.isLoading(state, key);
+const isDeadlineLoading = (state, key) => deadlineSelectors.isLoading(state, key);
 
 const tasksSelectors = {
   ...entitySelectors,
@@ -50,6 +52,7 @@ const tasksSelectors = {
   isCompleteLoading,
   isMoveUpLoading,
   isMoveDownLoading,
+  isDeadlineLoading,
 };
 
 export default tasksSelectors;

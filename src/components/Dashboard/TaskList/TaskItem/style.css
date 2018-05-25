@@ -14,10 +14,20 @@
   margin-right: 10px;
 }
 
-.dashboard-task-item .checkbox {
+.dashboard-task-item .data {
   flex: 1;
+  margin-left: 10px;
 }
 
-.dashboard-task-item .checked label {
+.dashboard-task-item .data .completed {
   text-decoration: line-through;
+}
+
+.dashboard-task-item .data .deadline {
+  font-size: 10px;
+  color: green;
+}
+
+.dashboard-task-item .data .overdue {
+  color: red;
 }

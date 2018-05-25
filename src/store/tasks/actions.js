@@ -236,6 +236,27 @@ const moveDownTask = (projectKey, key) => dispatch =>
       });
   });
 
+const deadlineTask = (projectKey, key, deadline) => dispatch =>
+  new Promise((resolve, reject) => {
+    dispatch(statusActions.loading("deadline", key));
+
+    const task = { deadline };
+
+    firebaseService
+      .database()
+      .ref(`tasks/${projectKey}/${key}`)
+      .update(task)
+      .then(() => {
+        resolve();
+        dispatch(entityActions.upsert(key, task));
+        dispatch(statusActions.success("deadline", key));
+      })
+      .catch((error) => {
+        reject(error);
+        dispatch(statusActions.error("deadline", error, key));
+      });
+  });
+
 const toggleEditTask = key => (dispatch, getState) =>
   new Promise((resolve) => {
     const state = getState();
@@ -259,6 +280,7 @@ const tasksActions = {
   toggleEditTask,
   moveUpTask,
   moveDownTask,
+  deadlineTask,
 };
 
 export { tasksActions as default };
