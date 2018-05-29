@@ -12,6 +12,7 @@ class NewCommentFormContainer extends Component {
     super(props);
 
     this.handleCreateComment = this.handleCreateComment.bind(this);
+    this.handleCreateFileComment = this.handleCreateFileComment.bind(this);
   }
 
   handleCreateComment(values) {
@@ -23,8 +24,26 @@ class NewCommentFormContainer extends Component {
     createComment(projectKey, key, values);
   }
 
+  handleCreateFileComment(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const {
+        uploadComment,
+        task: { key, projectKey },
+      } = this.props;
+
+      uploadComment(projectKey, key, file);
+    }
+  }
+
   render() {
-    return <NewCommentForm {...this.props} createComment={this.handleCreateComment} />;
+    return (
+      <NewCommentForm
+        {...this.props}
+        createComment={this.handleCreateComment}
+        createFileComment={this.handleCreateFileComment}
+      />
+    );
   }
 }
 
@@ -40,11 +59,13 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = {
   createComment: commentsActions.createComment,
+  uploadComment: commentsActions.uploadComment,
 };
 
 NewCommentFormContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   createComment: PropTypes.func.isRequired,
+  uploadComment: PropTypes.func.isRequired,
   task: PropTypes.shape({
     key: PropTypes.string.isRequired,
     projectKey: PropTypes.string.isRequired,

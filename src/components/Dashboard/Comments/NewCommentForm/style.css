@@ -1,0 +1,11 @@
+.form-message-group {
+  align-items: center;
+}
+
+.form-message-group label .field {
+  display: none;
+}
+
+.form-message-group .field {
+  flex-grow: 1 !important;
+}
