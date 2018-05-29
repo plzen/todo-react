@@ -2,12 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 
+import CommentRemoveButton from "./CommentRemoveButton";
+
 import "./style.css";
 
-const CommentItemComponent = ({ comment: { createdAt, message } }) => (
+const CommentItemComponent = ({ comment }) => (
   <div>
-    <div className="comment-date">{moment(createdAt).format("DD-MM-YYYY HH:mm")}</div>
-    <div className="comment-message">{message}</div>
+    <div className="comment-date">
+      {moment(comment.createdAt).format("DD-MM-YYYY HH:mm")}{" "}
+      <CommentRemoveButton comment={comment} />
+    </div>
+    <div className="comment-message">{comment.message}</div>
   </div>
 );
 

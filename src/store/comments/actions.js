@@ -51,6 +51,7 @@ const createComment = (projectKey, taskKey, params) => dispatch =>
       const comment = {
         message: params.message,
         createdAt: Date(),
+        projectKey,
         taskKey,
       };
       firebaseService
@@ -91,28 +92,47 @@ const createComment = (projectKey, taskKey, params) => dispatch =>
     }
   });
 
-// const removeTask = (projectKey, key) => dispatch =>
-//   new Promise((resolve, reject) => {
-//     dispatch(statusActions.loading("remove", key));
+const removeComment = (projectKey, taskKey, key) => dispatch =>
+  new Promise((resolve, reject) => {
+    dispatch(statusActions.loading("remove", key));
 
-//     firebaseService
-//       .database()
-//       .ref(`tasks/${projectKey}/${key}`)
-//       .remove()
-//       .then(() => {
-//         resolve();
-//         dispatch(entityActions.remove(key));
-//         dispatch(statusActions.success("remove", key));
-//       })
-//       .catch((error) => {
-//         reject(error);
-//         dispatch(statusActions.error("remove", error, key));
-//       });
-//   });
+    firebaseService
+      .database()
+      .ref(`comments/${taskKey}/${key}`)
+      .remove()
+      .then(() => {
+        dispatch(commentsEntityActions.remove(key));
+
+        return firebaseService
+          .database()
+          .ref(`tasks/${projectKey}/${taskKey}`)
+          .once("value", (snapshot) => {
+            const task = snapshot.val();
+            const currentCount = task.commentsCount || 0;
+            const updateTask = { commentsCount: currentCount - 1 };
+
+            return firebaseService
+              .database()
+              .ref(`tasks/${projectKey}/${taskKey}`)
+              .update(updateTask)
+              .then(() => {
+                resolve();
+
+                dispatch(tasksEntityActions.upsert(taskKey, updateTask));
+                dispatch(statusActions.success("remove", taskKey));
+              });
+          });
+      })
+      .catch((error) => {
+        reject(error);
+        dispatch(statusActions.error("remove", error, key));
+      });
+  });
 
 const commentsActions = {
   loadComments,
   createComment,
+  removeComment,
 };
 
 export { commentsActions as default };
