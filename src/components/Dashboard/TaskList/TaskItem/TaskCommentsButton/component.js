@@ -4,8 +4,19 @@ import PropTypes from "prop-types";
 
 import Comments from "../../../Comments";
 
+import "./style.css";
+
 const TaskCommentsButtonComponent = ({ task }) => (
-  <Modal trigger={<Icon name="comments" size="large" link />} closeIcon dimmer="inverted">
+  <Modal
+    trigger={
+      <div>
+        {!!task.commentsCount && <span className="comments-count">{task.commentsCount}</span>}
+        <Icon name="comments" size="large" link />
+      </div>
+    }
+    closeIcon
+    dimmer="inverted"
+  >
     <Modal.Header>Add Comment</Modal.Header>
     <Modal.Content>
       <Comments task={task} />

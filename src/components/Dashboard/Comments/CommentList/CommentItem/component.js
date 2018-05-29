@@ -14,7 +14,7 @@ const CommentItemComponent = ({ comment: { createdAt, message } }) => (
 CommentItemComponent.propTypes = {
   comment: PropTypes.shape({
     key: PropTypes.string.isRequired,
-    createdAt: PropTypes.instanceOf(Date).isRequired,
+    createdAt: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string]).isRequired,
     message: PropTypes.string.isRequired,
   }),
 };
