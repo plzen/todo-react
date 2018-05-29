@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-class CommentsContainer extends Component {
-  render() {
-    return <div>{this.props.taskKey}</div>;
-  }
-}
+import Comments from "./component";
+
+const CommentsContainer = ({ task }) => <Comments task={task} />;
 
 CommentsContainer.propTypes = {
-  taskKey: PropTypes.string.isRequired,
+  task: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default CommentsContainer;

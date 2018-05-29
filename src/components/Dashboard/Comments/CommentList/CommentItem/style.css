@@ -1,0 +1,9 @@
+.comment-date {
+  color: gray;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.comment-message {
+  margin-bottom: 20px;
+}

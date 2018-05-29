@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import TaskCommentsButton from "./component";
 
-const TaskCommentsButtonContainer = ({ task: { key } }) => <TaskCommentsButton taskKey={key} />;
+const TaskCommentsButtonContainer = ({ task }) => <TaskCommentsButton task={task} />;
 
 TaskCommentsButtonContainer.propTypes = {
   task: PropTypes.shape({
